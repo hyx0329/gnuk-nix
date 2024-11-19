@@ -1,0 +1,32 @@
+From e498fb57f94f55526a9e69670b7ef032ec096f60 Mon Sep 17 00:00:00 2001
+From: hyx0329 <hyx0329@outlook.com>
+Date: Tue, 14 Mar 2023 22:04:39 +0800
+Subject: [PATCH] add button for stdongle
+
+---
+ contrib/ackbtn-stm32f103.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/contrib/ackbtn-stm32f103.c b/contrib/ackbtn-stm32f103.c
+index 88d7d42..959f027 100644
+--- a/contrib/ackbtn-stm32f103.c
++++ b/contrib/ackbtn-stm32f103.c
+@@ -75,6 +75,15 @@ ackbtn_init (chopstx_intr_t *intr)
+       pin_config |= PINCFG_EDGE_RISING;
+       break;
+ 
++    case BOARD_ID_ST_DONGLE:
++      /* PA5 is connected to a switch */
++      afio_exticr_index = 0;
++      afio_exticr_extiX_pY = AFIO_EXTICR2_EXTI5_PA;
++      irq_num = EXTI9_5_IRQ;
++      pin_config = 0x0020; /* EXTI_PR_PR5 == EXTI_IMR_MR5 == EXTI_RTSR_TR5 */
++      pin_config |= PINCFG_EDGE_RISING;
++      break;
++
+     case BOARD_ID_FST_01SZ:
+     default:
+       /* PA3 is connected to a hall sensor DRV5032FA */
+-- 
+2.47.0
+
