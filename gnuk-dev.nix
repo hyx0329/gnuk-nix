@@ -43,7 +43,7 @@ pkgs.mkShell {
     custompkgs.arm-none-eabi-picolibc
 
     ### Flashing tools
-    #pkgs.openocd
+    pkgs.openocd
   ];
 
   # have to be this way to overcome some nix limitations
